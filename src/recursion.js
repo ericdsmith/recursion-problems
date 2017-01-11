@@ -159,6 +159,17 @@ var multiply = function(x, y) {
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods.
 var divide = function(x, y) {
+  if(y === 0){ return NaN; }
+  if(x < 0 && y < 0){
+    x = x-x-x;
+    y = y-y-y;
+  }
+
+  if(x < y){
+    return 0;
+  }else{
+    return 1 + divide(x - y, y);
+  }
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
@@ -167,6 +178,14 @@ var divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 var gcd = function(x, y) {
+  if(x < 0 || y < 0){ return null; }
+  if(x === 0){ return y; }
+  if(y === 0){ return x; }
+  if(x % y === 0){
+    return y;
+  }else{
+    return gcd(y, x % y);
+  }
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -174,21 +193,42 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  if(str1.length === 0 && str2.length === 0){ return true; }
+  if(str1[0] === str2[0]){
+    return compareStr(str1.substr(1), str2.substr(1));
+  }else{
+    return false;
+  }
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str) {
+  if(str.length === 0){
+    return [];
+  }else{
+    return [str[0]].concat(createArray(str.substr(1)));
+  }
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function(array) {
+  if(array.length === 0){
+    return [];
+  }else{
+    return [array.pop()].concat(reverseArr(array));
+  }
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  if(length === 0){
+    return [];
+  }else{
+    return [value].concat(buildList(value, length - 1));
+  }
 };
 
 // 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
@@ -197,6 +237,19 @@ var buildList = function(value, length) {
 // For numbers which are multiples of both three and five, output “FizzBuzz” instead of the number.
 // fizzBuzz(5) // ['1','2','Fizz','4','Buzz']
 var fizzBuzz = function(n) {
+  if(n === 0){
+    return [];
+  }else{
+    let value = (n).toString();
+    if(n % 15 === 0){
+      value = 'FizzBuzz'
+    }else if(n % 5 === 0){
+      value = 'Buzz';
+    }else if(n % 3 === 0){
+      value = 'Fizz';
+    }
+    return fizzBuzz(n - 1).concat(value);
+  }
 };
 
 // 20. Count the occurence of a value in a list.
